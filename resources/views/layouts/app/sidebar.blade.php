@@ -17,10 +17,24 @@
                     </flux:sidebar.item>
                 </flux:sidebar.group>
 
+                @if (auth()->user()->isAdmin())
+                    <flux:sidebar.group expandable heading="Master Data" class="grid">
+                        <flux:sidebar.item icon="tag" :href="route('master.kategori')"
+                                           :current="request()->routeIs('master.kategori*')" wire:navigate>
+                            {{ __('Kategori') }}
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="truck" :href="route('master.supplier')"
+                                           :current="request()->routeIs('master.supplier*')" wire:navigate>
+                            {{ __('Supplier') }}
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="archive-box" :href="route('master.product')"
+                                           :current="request()->routeIs('master.product*')" wire:navigate>
+                            {{ __('Barang') }}
+                        </flux:sidebar.item>
+                    </flux:sidebar.group>
+                @endif
+
                 <flux:sidebar.group :heading="__('Menu')" class="grid">
-                    <flux:sidebar.item icon="archive-box" href="#">
-                        {{ __('Master Data') }}
-                    </flux:sidebar.item>
                     <flux:sidebar.item icon="arrows-right-left" href="#">
                         {{ __('Transaksi') }}
                     </flux:sidebar.item>
