@@ -5,6 +5,7 @@ namespace App\Livewire\Transaction;
 use App\Models\Product;
 use App\Models\Supplier;
 use App\Models\Transaction;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -88,7 +89,7 @@ class StockInCreate extends Component
             $transaction = Transaction::create([
                 'type' => Transaction::TYPE_MASUK,
                 'date' => $this->date,
-                'user_id' => auth()->id(),
+                'user_id' => Auth::id(),
                 'supplier_id' => $this->supplier_id,
                 'notes' => $this->notes,
             ]);

@@ -5,6 +5,7 @@ namespace App\Livewire\Transaction;
 use App\Models\Product;
 use App\Models\Supplier;
 use App\Models\Transaction;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -94,7 +95,7 @@ class ReturCreate extends Component
             $transaction = Transaction::create([
                 'type' => Transaction::TYPE_RETUR,
                 'date' => $this->date,
-                'user_id' => auth()->id(),
+                'user_id' => Auth::id(),
                 'direction' => $this->direction,
                 'supplier_id' => $this->supplier_id,
                 'notes' => $this->notes,
