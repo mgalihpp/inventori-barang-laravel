@@ -49,10 +49,30 @@
                             {{ __('Retur') }}
                         </flux:sidebar.item>
                     </flux:sidebar.group>
-                    <flux:sidebar.item icon="chart-bar" href="#">
-                        {{ __('Laporan') }}
-                    </flux:sidebar.item>
+                    <flux:sidebar.group expandable heading="Laporan" class="grid">
+                        <flux:sidebar.item icon="chart-bar" :href="route('laporan.kartu-stok')"
+                                           :current="request()->routeIs('laporan.*')" wire:navigate>
+                            {{ __('Laporan') }}
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="cube" :href="route('laporan.low-stock')"
+                                           :current="request()->routeIs('laporan.low-stock')" wire:navigate>
+                            {{ __('Stok Menipis') }}
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="currency-dollar" :href="route('laporan.transaksi-periode')"
+                                           :current="request()->routeIs('laporan.transaksi-periode')" wire:navigate>
+                            {{ __('Periode') }}
+                        </flux:sidebar.item>
+                    </flux:sidebar.group>
                 </flux:sidebar.group>
+
+                @if (auth()->user()->isAdmin())
+                    <flux:sidebar.group :heading="__('User Management')" class="grid">
+                        <flux:sidebar.item icon="users" :href="route('users.index')"
+                                           :current="request()->routeIs('users.*')" wire:navigate>
+                            {{ __('Kelola User') }}
+                        </flux:sidebar.item>
+                    </flux:sidebar.group>
+                @endif
 
                 {{-- link eksternal dihapus -- diganti menu internal --}}
             </flux:sidebar.nav>

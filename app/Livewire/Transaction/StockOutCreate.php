@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Transaction;
 
+use App\Events\TransactionCreated;
 use App\Models\Product;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
@@ -95,6 +96,8 @@ class StockOutCreate extends Component
             foreach ($this->items as $item) {
                 $transaction->items()->create($item);
             }
+
+            TransactionCreated::dispatch($transaction);
         });
 
         $this->redirect(route('transaksi.keluar'));

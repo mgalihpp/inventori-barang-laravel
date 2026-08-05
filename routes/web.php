@@ -10,12 +10,18 @@ use App\Livewire\Master\ProductIndex;
 use App\Livewire\Master\SupplierCreate;
 use App\Livewire\Master\SupplierEdit;
 use App\Livewire\Master\SupplierIndex;
+use App\Livewire\Reports\CardsStockReport;
+use App\Livewire\Reports\LowStockReport;
+use App\Livewire\Reports\PeriodReport;
 use App\Livewire\Transaction\ReturCreate;
 use App\Livewire\Transaction\ReturIndex;
 use App\Livewire\Transaction\StockInCreate;
 use App\Livewire\Transaction\StockInIndex;
 use App\Livewire\Transaction\StockOutCreate;
 use App\Livewire\Transaction\StockOutIndex;
+use App\Livewire\UserManagement\UserCreate;
+use App\Livewire\UserManagement\UserEdit;
+use App\Livewire\UserManagement\UserIndex;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome')->name('home');
@@ -47,6 +53,18 @@ Route::middleware(['auth', 'verified'])->prefix('transaksi')->group(function () 
 
     Route::livewire('retur', ReturIndex::class)->name('transaksi.retur');
     Route::livewire('retur/create', ReturCreate::class)->name('transaksi.retur.create');
+});
+
+Route::middleware(['auth', 'verified'])->prefix('laporan')->group(function () {
+    Route::livewire('kartu-stok', CardsStockReport::class)->name('laporan.kartu-stok');
+    Route::livewire('low-stock', LowStockReport::class)->name('laporan.low-stock');
+    Route::livewire('transaksi-periode', PeriodReport::class)->name('laporan.transaksi-periode');
+});
+
+Route::middleware(['auth', 'verified', 'ensure-role:admin'])->prefix('users')->group(function () {
+    Route::livewire('', UserIndex::class)->name('users.index');
+    Route::livewire('create', UserCreate::class)->name('users.create');
+    Route::livewire('{user}/edit', UserEdit::class)->name('users.edit');
 });
 
 require __DIR__.'/settings.php';
