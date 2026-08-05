@@ -29,7 +29,10 @@ class Product extends Model
     protected static function booted(): void
     {
         static::creating(function (Product $product) {
-            $product->sku = SkuGenerator::generate($product->category);
+            $product->sku = SkuGenerator::generate(
+                $product->category,
+                $product->category ? $product->category->products()->count() : null,
+            );
         });
     }
 

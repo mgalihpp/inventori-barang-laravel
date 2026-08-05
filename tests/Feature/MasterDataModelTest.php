@@ -37,4 +37,20 @@ class MasterDataModelTest extends TestCase
         $this->assertNull($product->category);
         $this->assertNull($product->supplier);
     }
+
+    public function test_product_sku_is_auto_generated_on_create(): void
+    {
+        $category = Category::factory()->create(['name' => 'Peralatan']);
+
+        $product = Product::factory()->create(['category_id' => $category->id]);
+
+        $this->assertSame('PER-0001', $product->fresh()->sku);
+    }
+
+    public function test_product_without_category_gets_gen_sku(): void
+    {
+        $product = Product::factory()->create(['category_id' => null]);
+
+        $this->assertStringStartsWith('GEN-', $product->fresh()->sku);
+    }
 }

@@ -13,18 +13,16 @@ class SkuGenerator
      * Generate SKU format XXX-####.
      *
      * Prefiks = 3 huruf kapital dari nama kategori (tanpa spasi/simbol), atau 'GEN' bila null.
-     * Nomor = jumlah produk ber-prefiks sama di DB + 1; jika kategori tidak punya produk,
-     * increment dari static counter agar deterministik saat dipanggil berulang tanpa simpan.
+     * Nomor = existingCount + 1 (diisi caller dari count DB), atau dari static counter
+     * saat existingCount null (mode deterministik tanpa DB, untuk unit test).
      */
-    public static function generate(?Category $category): string
+    public static function generate(?Category $category, ?int $existingCount = null): string
     {
         $prefix = self::prefix($category);
 
-        $existing = $category?->products()->count() ?? 0;
-        $count = max($existing, self::$counters[$prefix] ?? 0);
-
-        $next = $count + 1;
-        self::$counters[$prefix] = $next;
+        $existing = $existingCount ?? (self::$counters[$prefix] ?? 0);
+        $next = $existing + 1;
+        self::$counters[$prefix] = max(self::$counters[$prefix] ?? 0, $next);
 
         return sprintf('%s-%04d', $prefix, $next);
     }
