@@ -35,9 +35,20 @@
                 @endif
 
                 <flux:sidebar.group :heading="__('Menu')" class="grid">
-                    <flux:sidebar.item icon="arrows-right-left" href="#">
-                        {{ __('Transaksi') }}
-                    </flux:sidebar.item>
+                    <flux:sidebar.group expandable heading="Transaksi" class="grid">
+                        <flux:sidebar.item icon="arrow-down" :href="route('transaksi.masuk')"
+                                           :current="request()->routeIs('transaksi.masuk*')" wire:navigate>
+                            {{ __('Stok Masuk') }}
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="arrow-up" :href="route('transaksi.keluar')"
+                                           :current="request()->routeIs('transaksi.keluar*')" wire:navigate>
+                            {{ __('Stok Keluar') }}
+                        </flux:sidebar.item>
+                        <flux:sidebar.item icon="arrow-uturn-left" :href="route('transaksi.retur')"
+                                           :current="request()->routeIs('transaksi.retur*')" wire:navigate>
+                            {{ __('Retur') }}
+                        </flux:sidebar.item>
+                    </flux:sidebar.group>
                     <flux:sidebar.item icon="chart-bar" href="#">
                         {{ __('Laporan') }}
                     </flux:sidebar.item>
