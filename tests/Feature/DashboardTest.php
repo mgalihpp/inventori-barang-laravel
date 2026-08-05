@@ -3,6 +3,9 @@
 namespace Tests\Feature;
 
 use App\Livewire\Dashboard;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
@@ -25,16 +28,21 @@ class DashboardTest extends TestCase
         $this->get(route('dashboard'))->assertOk();
     }
 
-    public function test_dashboard_shows_zero_stats(): void
+    public function test_dashboard_counts_real_data(): void
     {
+        Category::factory()->count(3)->create();
+        Supplier::factory()->count(2)->create();
+        Product::factory()->count(5)->create(['stock' => 50, 'min_stock' => 1]);
+        Product::factory()->count(2)->create(['stock' => 0, 'min_stock' => 5]);
+
         $user = User::factory()->create();
         $this->actingAs($user);
 
         Livewire::test(Dashboard::class)
             ->assertOk()
-            ->assertSet('productCount', 0)
-            ->assertSet('categoryCount', 0)
-            ->assertSet('supplierCount', 0)
-            ->assertSet('lowStockCount', 0);
+            ->assertSet('productCount', 7)
+            ->assertSet('categoryCount', 3)
+            ->assertSet('supplierCount', 2)
+            ->assertSet('lowStockCount', 2);
     }
 }
