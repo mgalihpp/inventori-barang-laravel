@@ -7,8 +7,8 @@
         <div class="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
             <div class="flex w-full max-w-md flex-col gap-6">
                 <a href="{{ route('home') }}" class="flex flex-col items-center gap-2 font-medium" wire:navigate>
-                    <span class="flex h-9 w-9 items-center justify-center rounded-md">
-                        <img src="{{ asset('logo.png') }}" alt="{{ config('app.name', 'Laravel') }}" class="h-9 w-9 rounded-md object-cover" />
+                    <span class="flex h-14 w-14 items-center justify-center rounded-md">
+                        <img src="{{ asset('logo.png') }}" alt="{{ config('app.name', 'Laravel') }}" class="h-14 w-14 rounded-md object-contain" />
                     </span>
 
                     <span class="sr-only">{{ config('app.name', 'Laravel') }}</span>
