@@ -366,9 +366,11 @@ class Dashboard extends Component
 
 ```php
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::livewire('dashboard', 'pages::dashboard')->name('dashboard');
+    Route::livewire('dashboard', \App\Livewire\Dashboard::class)->name('dashboard');
 });
 ```
+
+> **Catatan:** `pages::dashboard` (string) TIDAK bisa dipakai di starter kit ini untuk view Blade biasa — prefix `pages::` hanya terdaftar sebagai view namespace tanpa class mapping, dan full-page component hanya resolve ke SFC (`⚡`) atau class. Route full-page pakai class reference, seperti di atas.
 
 - [ ] **Step 6: Hapus `resources/views/dashboard.blade.php`**
 
@@ -485,7 +487,7 @@ git commit -m "feat: sidebar menu inventori (dashboard + placeholder master data
 
 **3. Type consistency:**
 - `User::isAdmin()` dipakai Task 2 (Consumes Task 1) ✓
-- `pages::dashboard` dipakai Task 3 & 4 ✓
+- `App\Livewire\Dashboard` (class) dipakai Task 3 & 4 ✓ (bukan string `pages::dashboard` — lihat Catatan Task 3)
 - Konstanten `ROLE_ADMIN`/`ROLE_STAFF` konsisten ✓
 - Middleware alias `ensure-role` → `EnsureUserHasRole` ✓
 
